@@ -1,3 +1,11 @@
 /*
  *= require admin/spree_backend
 */
+
+table#store_credits.index {
+  table-layout: fixed;
+}
+
+table#store_credits.index td {
+  word-wrap: break-word;
+}

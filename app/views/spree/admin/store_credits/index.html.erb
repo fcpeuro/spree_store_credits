@@ -5,24 +5,34 @@
 <% end %>
 
 
-<table class="index">
+<table class="index" id="store_credits">
+  <colgroup>
+    <col style="width: 25%;">
+    <col style="width: 10%;">
+    <col style="width: 10%;">
+    <col style="width: 30%;">
+    <col style="width: 15%;">
+  </colgroup>
   <thead>
     <tr>
       <th><%= Spree.t("user") %></th>
       <th><%= Spree.t("amount") %></th>
       <th><%= Spree.t("remaining_amount") %></th>
       <th><%= Spree.t("reason") %></th>
-      <th><%= Spree.t("created_by") %></th>
     </tr>
   </thead>
   <tbody>
     <% @store_credits.each do |store_credit|%>
       <tr id="<%= dom_id store_credit %>">
         <td><%= link_to store_credit.user.email, admin_user_url(store_credit.user) if store_credit.user.present? %></td>
-        <td><%= number_to_currency store_credit.amount %></td>
-        <td><%= number_to_currency store_credit.remaining_amount %></td>
-        <td><%= store_credit.reason %></td>
-        <td><%= link_to store_credit.creator.email, admin_user_url(store_credit.creator) if store_credit.creator.present? %></td>
+        <td class="align-center"><%= number_to_currency store_credit.amount %></td>
+        <td class="align-center"><%= number_to_currency store_credit.remaining_amount %></td>
+        <td>
+          <p><%= store_credit.reason %></p>
+          <p>
+            <%== Spree.t("created_by") + ": " + link_to(store_credit.creator.email, admin_user_url(store_credit.creator)) if store_credit.creator.present? %>
+          </p>
+        </td>
         <td class="actions">
           <% if store_credit.remaining_amount > 0 %>
             <% if store_credit.amount == store_credit.remaining_amount %>
@@ -38,7 +48,7 @@
       </tr>
     <% end %>
     <% if @store_credits.empty? %>
-      <tr><td colspan="5"><%= Spree.t(:none) %></td></tr>
+      <tr><td colspan="4"><%= Spree.t(:none) %></td></tr>
     <% end %>
   </tbody>
 </table>
